@@ -15,6 +15,9 @@ public class Inventory implements IInventory{
 
     final static Logger logger = Logger.getLogger(Inventory.class);
 
+    private String inventoryFileName = "groceryItem.json";
+    private String prpmotionalFileName = "promotionalOffer.json";
+
     /**
      * reading  a list of grocery items from a flatfile
      * @return groceryItemsMap
@@ -23,7 +26,7 @@ public class Inventory implements IInventory{
     List<String> barcodeList = null;
     public  Map<String,GroceryItem> readItemsFromFile() {
         Map<String,GroceryItem> groceryItemsMap = new HashMap<String,GroceryItem>();
-        File jsonFile = new File("groceryItem.json");
+        File jsonFile = new File(inventoryFileName);
         try {
             BufferedReader bufferReader = new BufferedReader(new FileReader(jsonFile));
             Gson gson = new Gson();
@@ -72,7 +75,7 @@ public class Inventory implements IInventory{
 
         //String promotionFileName = getFileName("promotionalOffer.json");
 
-        File file = new File("promotionalOffer.json");
+        File file = new File(prpmotionalFileName);
         try {
             BufferedReader bufferReader = new BufferedReader(new FileReader(file));
             Gson gson = new Gson();
@@ -126,4 +129,19 @@ public class Inventory implements IInventory{
     }
 
 
+    public String getInventoryFileName() {
+        return inventoryFileName;
+    }
+
+    public void setInventoryFileName(String inventoryFileName) {
+        this.inventoryFileName = inventoryFileName;
+    }
+
+    public String getPrpmotionalFileName() {
+        return prpmotionalFileName;
+    }
+
+    public void setPrpmotionalFileName(String prpmotionalFileName) {
+        this.prpmotionalFileName = prpmotionalFileName;
+    }
 }

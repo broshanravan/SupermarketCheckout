@@ -1,0 +1,8 @@
+[
+  {"itemCode":"BNS", "itemName":"Beans","measurementUnit":"COUNT", "price":0.50},
+  {"itemCode":"BRD", "itemName":"Bread", "measurementUnit":"COUNT", "price":0.8},
+  {"itemCode":"SUP", "itemName":"Soup", "measurementUnit":"COUNT", "price":0.65},
+  {"itemCode":"APL", "itemName":"Apple","measurementUnit":"COUNT","price":1.00},
+  {"itemCode":"COK", "itemName":"Coke", "measurementUnit":"COUNT","price":0.7},
+  {"itemCode":"BNN", "itemName":"Banana","measurementUnit":"WEIGHT","price":1.00}
+]

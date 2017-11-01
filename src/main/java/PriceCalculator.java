@@ -83,7 +83,7 @@ public class PriceCalculator  implements IPriceCalculator{
         List<PromotionalOffer> promotionalOfferList = inventory.getPromotionalOffersList();
 
         for( PromotionalOffer promotionalOffer :promotionalOfferList) {
-            double discountedGoodPurchasedCount = 0;
+            int discountedGoodPurchasedCount = 0;
             double itemPrice =0;
 
             for (GroceryItem groceryItem : shoppingBasket ) {
@@ -99,9 +99,11 @@ public class PriceCalculator  implements IPriceCalculator{
                 if (promotionalOffer.getDiscountType() == DeductionType.NUMBER) {
                     promotionalDiscount = +promotionalOffer.getPromotedItemCount() / discountedGoodPurchasedCount * itemPrice;
                 } else {
-                    double originalPrice = discountedGoodPurchasedCount * itemPrice;
-                    double discountedPrice = +(discountedGoodPurchasedCount / promotionalOffer.getPromotedItemCount()) * (promotionalOffer.getDiscountedPrice()) ;
-                    promotionalDiscount = originalPrice - discountedPrice;
+
+                    double discountedQuantity = +(discountedGoodPurchasedCount / promotionalOffer.getPromotedItemCount());
+                    double originalPrice = promotionalOffer.getPromotedItemCount() * discountedQuantity * itemPrice;
+                    double discountedPrice = discountedQuantity * promotionalOffer.getDiscountedPrice();
+                    promotionalDiscount = (double)(originalPrice *100 - discountedPrice * 100)/100;
                 }
             }
 

@@ -9,18 +9,15 @@ import static org.junit.Assert.assertEquals;
  * Created by Behrooz on 31/10/2017.
  */
 public class TestPromotionalOffer {
-/*
+
     @Test
     public void testParametrazedConstructor() {
-        PromotionalOffer promotionalOffer = new PromotionalOffer("SUP",
-        2,
-        "BRD",
+        PromotionalOffer promotionalOffer = new PromotionalOffer("COK", 2, DeductionType.PRICE, 0,1);
 
-        50);
-        assertEquals("SUP", promotionalOffer.getPromotedItemBarcode());
         assert(2 == promotionalOffer.getPromotedItemCount());
-        assertEquals("BRD",promotionalOffer.getDiscountedItemBarcode());
-        assert(50 == promotionalOffer.getDiscountPercentRate());
+        assertEquals("COK",promotionalOffer.getPromotedItemBarcode());
+        assert(2 == promotionalOffer.getPromotedItemCount());
+        assert(1 == promotionalOffer.getDiscountedPrice());
     }
 
     @Test
@@ -33,16 +30,16 @@ public class TestPromotionalOffer {
     @Test
     public void testSetDiscountedItemBarcode() {
         PromotionalOffer promotionalOffer = new PromotionalOffer();
-        promotionalOffer.setDiscountedItemBarcode("BRD");
-        assertEquals("BRD",promotionalOffer.getDiscountedItemBarcode());
+        promotionalOffer.setPromotedItemBarcode("BRD");
+        assertEquals("BRD",promotionalOffer.getPromotedItemBarcode());
     }
 
 
     @Test
     public void testSetDiscountPercentRate(){
         PromotionalOffer promotionalOffer = new PromotionalOffer();
-        promotionalOffer.setDiscountPercentRate(50);
-        assert(50 == promotionalOffer.getDiscountPercentRate());
+        promotionalOffer.setPromotedItemCount(5);
+        assert(5 == promotionalOffer.getPromotedItemCount());
     }
 
     @Test
@@ -51,5 +48,5 @@ public class TestPromotionalOffer {
         promotionalOffer.setPromotedItemCount(2);
         assert(2 == promotionalOffer.getPromotedItemCount());
     }
-    */
+
 }
