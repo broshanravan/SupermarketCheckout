@@ -40,10 +40,7 @@ public class TestInventory {
         assert(barCodesList.contains("BRD"));
         assert(barCodesList.contains("APL"));
         assert(barCodesList.contains("COK"));
-        assert(barCodesList.contains("BNN"));  
-
+        assert(barCodesList.contains("BNN"));
     }
-
-
 
 }

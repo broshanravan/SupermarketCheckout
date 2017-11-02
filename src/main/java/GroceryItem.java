@@ -6,12 +6,12 @@ public class GroceryItem {
     private String itemName;
     private double price;
     private String itemCode;
-    private String measurementUnit;
+    private MeasurementMethod measurementUnit;
 
     public GroceryItem(String itemNameIn,
                  double priceIn,
                  String itemCodeIn,
-                 String measurementUnitIn) {
+                       MeasurementMethod measurementUnitIn) {
          itemName = itemNameIn;
          price = priceIn;
          itemCode = itemCodeIn;
@@ -47,11 +47,11 @@ public class GroceryItem {
         this.itemCode = itemCode;
     }
 
-    public String getMeasurementUnit() {
+    public MeasurementMethod getMeasurementUnit() {
         return measurementUnit;
     }
 
-    public void setMeasurementUnit(String measurementUnit) {
+    public void setMeasurementUnit(MeasurementMethod measurementUnit) {
         this.measurementUnit = measurementUnit;
     }
 }

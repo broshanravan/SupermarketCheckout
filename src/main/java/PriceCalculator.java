@@ -12,6 +12,7 @@ public class PriceCalculator  implements IPriceCalculator{
     Map<String, GroceryItem> groceryItemsMap = inventory.readItemsFromFile();
 
 
+
     /**
      * Calculating the total price.
      * This function runs continuously until the
@@ -23,10 +24,28 @@ public class PriceCalculator  implements IPriceCalculator{
     public String calculateTotalPayment(String itemCode) {
         double subTotal = 0;
         List<GroceryItem> basket = new ArrayList<GroceryItem>();
+        Scanner scanner = new Scanner(System.in);
+
         while (!"end".equalsIgnoreCase(itemCode)) {
             GroceryItem groceryItem = groceryItemsMap.get(itemCode);
             if(groceryItem != null){
                 basket.add(groceryItem);
+                if(groceryItem.getMeasurementUnit().equals(MeasurementMethod.WEIGHT) ) {
+                    System.out.println("Please Enter Weight in kg: ");
+                    boolean waightIsValid = false;
+                    while (!waightIsValid) {
+                        try {
+                            double weight = Double.parseDouble(scanner.nextLine());
+                            subTotal += groceryItem.getPrice() * weight;
+                            waightIsValid = true;
+                        } catch (Exception ex) {
+                            System.out.println("Please Enter Weight in kg: ");
+                        }
+                    }
+
+
+                }
+
                 subTotal += groceryItem.getPrice();
 
                 System.out.println("Decribtion : " +  groceryItem.getItemName());
@@ -37,7 +56,7 @@ public class PriceCalculator  implements IPriceCalculator{
             }  else {
                 System.out.println("Invalid barCode, Please try again");
             }
-            Scanner scanner = new Scanner(System.in);
+
             itemCode = scanner.nextLine();
         }
         subTotal = Double.valueOf(decimalFormatter.format(subTotal));
