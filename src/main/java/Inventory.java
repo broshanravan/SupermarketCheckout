@@ -38,7 +38,6 @@ public class Inventory implements IInventory{
             for (GroceryItem  groceryItem : groceryItemList) {
                 groceryItemsMap.put(groceryItem.getItemCode(),groceryItem);
                 barcodeList.add(groceryItem.getItemCode());
-                System.out.println(groceryItem.getItemCode());
             }
 
 

@@ -38,7 +38,7 @@ public class TestPriceCalculator {
         coke = new GroceryItem("Coke",0.7, "COK",MeasurementMethod.COUNT,0.200);
         bean = new GroceryItem("Beans",0.5, "BNS",MeasurementMethod.COUNT,0.200);
         bannanas = new GroceryItem("Bannanas",1.5, "BNN",MeasurementMethod.WEIGHT,2.00);
-        orange = new GroceryItem("Orange",1.5, "ORG",MeasurementMethod.WEIGHT,3);
+        orange = new GroceryItem("Orange",1.99, "ORG",MeasurementMethod.WEIGHT,3);
 
     }
 
