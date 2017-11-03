@@ -15,10 +15,9 @@ public class Checkout {
 
         Scanner scanner = new Scanner(System.in);
         String code = scanner.nextLine();
-        String totalPrice = priceCalculatur.calculateTotalPayment(code);
+        priceCalculatur.addItemsToBasket(code);
 
-        System.out.println("totalPrice is: \u00a3"  + totalPrice);
-
+        //System.out.println("totalPrice is: \u00a3"  + totalPrice);
 
     }
 }

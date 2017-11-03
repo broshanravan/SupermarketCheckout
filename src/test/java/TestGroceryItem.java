@@ -9,12 +9,13 @@ public class TestGroceryItem {
 
     @Test
     public void testParametrizedConstructor() {
-        GroceryItem groceryItem = new GroceryItem("apple", 1, "APL",  "weight");
+        GroceryItem groceryItem = new GroceryItem("apple", 1, "APL",  MeasurementMethod.WEIGHT,10);
 
         assertEquals("apple",groceryItem.getItemName());
         assert(1 == groceryItem.getPrice());
         assertEquals("APL",groceryItem.getItemCode());
-        assertEquals("weight",groceryItem.getMeasurementUnit());
+        assertEquals(MeasurementMethod.WEIGHT,groceryItem.getMeasurementUnit());
+        assert(10 == groceryItem.getWeight());
     }
 
     @Test
@@ -41,8 +42,8 @@ public class TestGroceryItem {
     @Test
     public void testgetMeasurementUnit() {
         GroceryItem groceryItem = new GroceryItem();
-        groceryItem.setMeasurementUnit("weight");
-        assertEquals("weight",groceryItem.getMeasurementUnit());
+        groceryItem.setMeasurementUnit(MeasurementMethod.WEIGHT);
+        assertEquals(MeasurementMethod.WEIGHT,groceryItem.getMeasurementUnit());
     }
 
 }

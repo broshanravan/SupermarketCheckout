@@ -25,16 +25,21 @@ public class TestPriceCalculator {
     GroceryItem bread = null;
     GroceryItem coke = null;
     GroceryItem bean = null;
+    GroceryItem bannanas = null;
+    GroceryItem orange = null;
 
     @Before
     public void initiateGroceryItems(){
 
-        apple = new GroceryItem("apple",1.0,"APL","weight");
-        milk = new GroceryItem("milk",1.3, "MLK","count");
-        soup = new GroceryItem("soup",0.65, "SUP","count");
-        bread = new GroceryItem("bread",0.8, "BRD","count");
-        coke = new GroceryItem("Coke",0.7, "COK","count");
-        bean = new GroceryItem("Beans",0.5, "BNS","count");
+        apple = new GroceryItem("apple",1.0,"APL",MeasurementMethod.COUNT,0.200);
+        milk = new GroceryItem("milk",1.3, "MLK",MeasurementMethod.COUNT,0.200);
+        soup = new GroceryItem("soup",0.65, "SUP",MeasurementMethod.COUNT,0.200);
+        bread = new GroceryItem("bread",0.8, "BRD",MeasurementMethod.COUNT,0.200);
+        coke = new GroceryItem("Coke",0.7, "COK",MeasurementMethod.COUNT,0.200);
+        bean = new GroceryItem("Beans",0.5, "BNS",MeasurementMethod.COUNT,0.200);
+        bannanas = new GroceryItem("Bannanas",1.5, "BNN",MeasurementMethod.WEIGHT,2.00);
+        orange = new GroceryItem("Orange",1.5, "ORG",MeasurementMethod.WEIGHT,3);
+
     }
 
 
@@ -148,6 +153,57 @@ public class TestPriceCalculator {
 
         double discount = priceCalculator.getPromotionalDiscount(groceryItemList);
         assertEquals(0.0, discount );
+
+
+    }
+
+    /**
+     * This methos is supposed to test the price
+     * calculation for the groceryItems that are being measured by
+     * Their weight rather than count
+     */
+
+    @Test
+    public void testBasketWithFruits() {
+        PriceCalculator priceCalculator = new PriceCalculator();
+        List<GroceryItem> basket = new ArrayList<GroceryItem>();
+        basket.add(bannanas);
+        double price = Double.parseDouble(priceCalculator.calculatePayment(basket));
+        assert(price  == 3);
+    }
+
+
+    @Test
+    public void testCombinationOfCountWeightOffer() {
+        PriceCalculator priceCalculator = new PriceCalculator();
+        List<GroceryItem> basket = new ArrayList<GroceryItem>();
+        PromotionalOffer promotionalOffer = new PromotionalOffer("BNS", 3, DeductionType.NUMBER, 2,0);
+         basket.add(bean);
+        basket.add(bean);
+        basket.add(bean);
+        basket.add(bannanas);
+        double price = Double.parseDouble(priceCalculator.calculatePayment(basket));
+        assert(price  == 4);
+    }
+
+    @Test
+    public void testOfferOnFruits() {
+        PriceCalculator priceCalculator = new PriceCalculator();
+        List<GroceryItem> basket = new ArrayList<GroceryItem>();
+        List<PromotionalOffer> promotionalOfferList = new LinkedList<PromotionalOffer>();
+        PromotionalOffer promotionalOfferBannanas = new PromotionalOffer("BNN", 3, DeductionType.NUMBER, 2,2);
+        PromotionalOffer promotionalOfferOrange = new PromotionalOffer("ORG", 3, DeductionType.NUMBER, 3,3);
+        promotionalOfferList.add(promotionalOfferBannanas);
+        promotionalOfferList.add(promotionalOfferOrange);
+        basket.add(bannanas);
+        basket.add(orange);
+
+
+        Inventory inventory = Mockito.mock(Inventory.class);
+        when (inventory.getPromotionalOffersList()).thenReturn(promotionalOfferList);
+        priceCalculator.setInventory(inventory);
+        double price = Double.parseDouble(priceCalculator.calculatePayment(basket));
+        assert(price  == 3);
 
     }
 

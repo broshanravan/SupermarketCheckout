@@ -7,8 +7,9 @@ import java.util.List;
 
 public interface IPriceCalculator {
 
-    public String calculateTotalPayment(String itemCode) ;
+    public String calculatePayment(List<GroceryItem> basket) ;
 
+    public void  addItemsToBasket(String itemCode);
 
     public boolean isBarCodeValid(String barCodeIn);
 }

@@ -13,60 +13,77 @@ public class PriceCalculator  implements IPriceCalculator{
 
 
 
+    public void addItemsToBasket(String itemCode) {
+
+        List<GroceryItem> basket = new ArrayList<GroceryItem>();
+        Scanner scanner = new Scanner(System.in);
+        GroceryItem groceryItem = groceryItemsMap.get(itemCode);
+        if(MeasurementMethod.WEIGHT.equals(groceryItem.getMeasurementUnit())) {
+            System.out.println("please enter weight; ");
+            double weight = Double.parseDouble(scanner.nextLine());
+            groceryItem.setWeight(weight);
+        }
+
+        while (!"end".equalsIgnoreCase(itemCode)) {
+            String code = scanner.nextLine();
+            if (groceryItem != null) {
+                basket.add(groceryItem);
+            }
+            System.out.println("Description : " + groceryItem.getItemName());
+            System.out.println("Price : \u00a3" + decimalFormatter.format(groceryItem.getPrice()));
+
+            System.out.println("please enter next Item code; ");
+            groceryItem = groceryItemsMap.get(itemCode);
+            if(MeasurementMethod.WEIGHT.equals(groceryItem.getMeasurementUnit())) {
+                System.out.println("please enter weight; ");
+                double weight = Double.parseDouble(scanner.nextLine());
+                groceryItem.setWeight(weight);
+            }
+        }
+
+        calculatePayment(basket);
+    }
+
+
     /**
      * Calculating the total price.
      * This function runs continuously until the
      * user completes the shopping
-     * @param itemCode
+     * @param basket
      * @return finalPayment
      */
 
-    public String calculateTotalPayment(String itemCode) {
+    public String calculatePayment(List<GroceryItem> basket) {
         double subTotal = 0;
-        List<GroceryItem> basket = new ArrayList<GroceryItem>();
         Scanner scanner = new Scanner(System.in);
 
-        while (!"end".equalsIgnoreCase(itemCode)) {
-            GroceryItem groceryItem = groceryItemsMap.get(itemCode);
-            if(groceryItem != null){
-                basket.add(groceryItem);
-                if(groceryItem.getMeasurementUnit().equals(MeasurementMethod.WEIGHT) ) {
+        for(GroceryItem groceryItem :basket){
+            if(groceryItem != null) {
+                if (groceryItem.getMeasurementUnit().equals(MeasurementMethod.WEIGHT)) {
                     System.out.println("Please Enter Weight in kg: ");
                     boolean waightIsValid = false;
                     while (!waightIsValid) {
                         try {
-                            double weight = Double.parseDouble(scanner.nextLine());
+                            double weight = groceryItem.getWeight();
                             subTotal += groceryItem.getPrice() * weight;
                             waightIsValid = true;
                         } catch (Exception ex) {
                             System.out.println("Please Enter Weight in kg: ");
                         }
                     }
-
-
+                } else {
+                    subTotal += groceryItem.getPrice();
                 }
-
-                subTotal += groceryItem.getPrice();
-
-                System.out.println("Decribtion : " +  groceryItem.getItemName());
-                System.out.println("Price : \u00a3" +  decimalFormatter.format(groceryItem.getPrice()));
-                System.out.println("Sub-total : \u00a3" + decimalFormatter.format(subTotal));
-
-                System.out.println("please enter next Item code; " );
-            }  else {
-                System.out.println("Invalid barCode, Please try again");
             }
-
-            itemCode = scanner.nextLine();
         }
         subTotal = Double.valueOf(decimalFormatter.format(subTotal));
 
         System.out.println("Sub-total is: \u00a3" + subTotal);
         double discount = this.getPromotionalDiscount(basket);
-
         if (discount == 0) {
             System.out.println("(No offers available)");
         } else {
+            System.out.println("Sub-total is: \u00a3" + subTotal);
             System.out.println("total discount amount is: \u00a3" + decimalFormatter.format(discount));
         }
         String finalPayment = decimalFormatter.format(subTotal - discount);

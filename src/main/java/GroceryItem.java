@@ -7,15 +7,18 @@ public class GroceryItem {
     private double price;
     private String itemCode;
     private MeasurementMethod measurementUnit;
+    private double weight;
 
     public GroceryItem(String itemNameIn,
                  double priceIn,
                  String itemCodeIn,
-                       MeasurementMethod measurementUnitIn) {
+                 MeasurementMethod measurementUnitIn,
+                 double weightIn) {
          itemName = itemNameIn;
          price = priceIn;
          itemCode = itemCodeIn;
         measurementUnit = measurementUnitIn;
+        weight= weightIn;
 
     }
 
@@ -53,5 +56,13 @@ public class GroceryItem {
 
     public void setMeasurementUnit(MeasurementMethod measurementUnit) {
         this.measurementUnit = measurementUnit;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 }
