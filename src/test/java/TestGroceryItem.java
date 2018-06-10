@@ -3,7 +3,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by Behrooz on 31/10/2017.
+ * Created by Behrooz on 10/06/2018..
  */
 public class TestGroceryItem {
 
@@ -14,7 +14,7 @@ public class TestGroceryItem {
         assertEquals("apple",groceryItem.getItemName());
         assert(1 == groceryItem.getPrice());
         assertEquals("APL",groceryItem.getItemCode());
-        assertEquals(MeasurementMethod.WEIGHT,groceryItem.getMeasurementUnit());
+        assertEquals(MeasurementMethod.WEIGHT,groceryItem.getMeasurementMethod());
         assert(10 == groceryItem.getWeight());
     }
 
@@ -42,8 +42,8 @@ public class TestGroceryItem {
     @Test
     public void testgetMeasurementUnit() {
         GroceryItem groceryItem = new GroceryItem();
-        groceryItem.setMeasurementUnit(MeasurementMethod.WEIGHT);
-        assertEquals(MeasurementMethod.WEIGHT,groceryItem.getMeasurementUnit());
+        groceryItem.setMeasurementMethod(MeasurementMethod.WEIGHT);
+        assertEquals(MeasurementMethod.WEIGHT,groceryItem.getMeasurementMethod());
     }
 
 }

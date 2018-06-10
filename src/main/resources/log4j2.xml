@@ -18,6 +18,7 @@
             <PatternLayout   pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
         </Console>
     </Appenders>
+
     <Loggers>
         <Logger name="com.howtodoinjava" level="debug" additivity="true">
             <appender-ref ref="fileLogger" level="debug" />
@@ -26,4 +27,5 @@
             <appender-ref ref="console" />
         </Root>
     </Loggers>
+
 </Configuration>

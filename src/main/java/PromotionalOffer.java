@@ -1,12 +1,13 @@
 /**
- * Created by Behrooz on 31/10/2017.
+ * Created by Behrooz on 10/06/2018.
  */
 public class PromotionalOffer {
     private String promotedItemBarcode;
     private int promotedItemCount;
-    private DeductionType discountType;
-    private int numbersCharged;
-    private double discountedPrice;
+    private DeductionType deductionType;
+    private double discountRate;
+    private String substitutedItemBarcode;
+    private int substitutedItemCount;
 
 
 
@@ -14,24 +15,23 @@ public class PromotionalOffer {
 
             String promotedItemBarcodeIn,
             int promotedItemCountIn,
-            DeductionType discountTypeIn,
-            int numbersChargedIn,
-            double discountedPriceIn
+            DeductionType deductionTypeIn,
+            double discountedRateIn,
+            String substitutedItemBarcodeIn,
+            int substitutedItemCountIn
     ) {
         promotedItemBarcode = promotedItemBarcodeIn;
         promotedItemCount = promotedItemCountIn;
-        discountType = discountTypeIn;
-        numbersCharged = numbersChargedIn;
-        discountedPrice = discountedPriceIn;
+        deductionType = deductionTypeIn;
+        discountRate = discountedRateIn;
+        substitutedItemBarcode = substitutedItemBarcodeIn;
+        substitutedItemCount =substitutedItemCountIn;
 
     }
 
     public PromotionalOffer () {
 
     }
-
-
-
 
 
 
@@ -51,14 +51,15 @@ public class PromotionalOffer {
         this.promotedItemCount = promotedItemCount;
     }
 
-    public DeductionType getDiscountType() {
-        return discountType;
+    public DeductionType getDeductionType() {
+        return deductionType;
     }
 
-    public void setDiscountType(DeductionType discountType) {
-        this.discountType = discountType;
+    public void setDeductionType(DeductionType deductionType) {
+        this.deductionType = deductionType;
     }
 
+    /*
     public int getNumbersCharged() {
         return numbersCharged;
     }
@@ -66,12 +67,28 @@ public class PromotionalOffer {
     public void setNumbersCharged(int numbersCharged) {
         this.numbersCharged = numbersCharged;
     }
-
-    public double getDiscountedPrice() {
-        return discountedPrice;
+    */
+    public double getDiscountRate() {
+        return discountRate;
     }
 
-    public void setDiscountedPrice(double discountedPrice) {
-        this.discountedPrice = discountedPrice;
+    public void setDiscountRate(double discountRate) {
+        this.discountRate = discountRate;
+    }
+
+    public String getSubstitutedItemBarcode() {
+        return substitutedItemBarcode;
+    }
+
+    public void setSubstitutedItemBarcode(String substitutedItemBarcode) {
+        this.substitutedItemBarcode = substitutedItemBarcode;
+    }
+
+    public int getSubstitutedItemCount() {
+        return substitutedItemCount;
+    }
+
+    public void setSubstitutedItemCount(int substitutedItemCount) {
+        this.substitutedItemCount = substitutedItemCount;
     }
 }

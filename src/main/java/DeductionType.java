@@ -1,7 +1,7 @@
 /**
- * Created by Behrooz on 31/10/2017.
+ * Created by Behrooz on 10/06/2018.
  */
 public enum DeductionType {
-    NUMBER,
-    PRICE;
+    INDIVIDUAL,
+    COMBINATION
 }

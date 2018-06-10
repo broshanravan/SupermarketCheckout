@@ -1,11 +1,10 @@
 
 /**
- * Created by Behrooz on 31/10/2017.
+ * Created by Behrooz on 10/06/2018..
  */
 import java.io.*;
 import java.util.*;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 import com.google.gson.reflect.TypeToken;
@@ -92,6 +91,34 @@ public class Inventory implements IInventory{
 
     }
 
+
+    public List<PromotionalOffer> getIndividualPromotionalOffersList(){
+        List<PromotionalOffer> individualOfferList = new ArrayList<PromotionalOffer>()
+        List<PromotionalOffer> promotionalOfferList = getPromotionalOffersList();
+
+        for (PromotionalOffer promotionalOffer: promotionalOfferList) {
+            if (promotionalOffer.getDeductionType() == DeductionType.INDIVIDUAL){
+                individualOfferList.add(promotionalOffer);
+            }
+
+        }
+        return individualOfferList;
+
+    }
+
+    public List<PromotionalOffer> getCombinedPromotionalOffersList(){
+        List<PromotionalOffer> combinationOfferList = new ArrayList<PromotionalOffer>();
+        List<PromotionalOffer> promotionalOfferList = getPromotionalOffersList();
+        for (PromotionalOffer promotionalOffer: promotionalOfferList) {
+            if (promotionalOffer.getDeductionType() == DeductionType.COMBINATION){
+                combinationOfferList.add(promotionalOffer);
+            }
+
+        }
+        return combinationOfferList;
+
+    }
+
     /**
      * retvieving the individual item
      * price
@@ -104,7 +131,7 @@ public class Inventory implements IInventory{
         GroceryItem groceryItem = itemsMap.get(itemBarCode.trim());
 
 
-        itemPrice = groceryItem.getPrice();
+        itemPrice = groceryItem.getPricePerMeasurementUnit();
         return itemPrice;
     }
 

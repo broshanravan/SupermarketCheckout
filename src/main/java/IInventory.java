@@ -1,6 +1,6 @@
 
 /**
- * Created by Behrooz on 31/10/2017.
+ * Created by Behrooz on 10/06/2018..
  */
 import java.util.*;
 
@@ -10,4 +10,8 @@ public interface IInventory {
     public List getAllBarCodes();
 
     public List<PromotionalOffer> getPromotionalOffersList();
+
+    public List<PromotionalOffer> getIndividualPromotionalOffersList();
+
+    public List<PromotionalOffer> getCombinedPromotionalOffersList();
 }

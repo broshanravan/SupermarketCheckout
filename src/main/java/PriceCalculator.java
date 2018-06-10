@@ -1,12 +1,12 @@
 /**
- * Created by Behrooz on 31/10/2017.
+ * Created by Behrooz on 10/06/2018..
  */
 import java.text.DecimalFormat;
 import java.util.*;
 
 public class PriceCalculator  implements IPriceCalculator{
 
-    Inventory inventory = new Inventory();
+    IInventory inventory = new Inventory();
     DecimalFormat decimalFormatter = new DecimalFormat("0.00");
 
     Map<String, GroceryItem> groceryItemsMap = inventory.readItemsFromFile();
@@ -18,29 +18,33 @@ public class PriceCalculator  implements IPriceCalculator{
         List<GroceryItem> basket = new ArrayList<GroceryItem>();
         Scanner scanner = new Scanner(System.in);
         GroceryItem groceryItem = groceryItemsMap.get(itemCode);
-        if(MeasurementMethod.WEIGHT.equals(groceryItem.getMeasurementUnit())) {
-            System.out.println("please enter weight; ");
-            double weight = Double.parseDouble(scanner.nextLine());
-            groceryItem.setWeight(weight);
-        }
-
-        while (!"end".equalsIgnoreCase(itemCode)) {
-            String code = scanner.nextLine();
-            if (groceryItem != null) {
-                basket.add(groceryItem);
-            }
-            System.out.println("Description : " + groceryItem.getItemName());
-            System.out.println("Price : \u00a3" + decimalFormatter.format(groceryItem.getPrice()));
-
-            System.out.println("please enter next Item code; ");
-            groceryItem = groceryItemsMap.get(itemCode);
-            if(MeasurementMethod.WEIGHT.equals(groceryItem.getMeasurementUnit())) {
+        if(groceryItem == null){
+            System.err.println("Invalid BAR Code, Please try again");
+        }else {
+            if (MeasurementMethod.WEIGHT.equals(groceryItem.getMeasurementMethod())) {
                 System.out.println("please enter weight; ");
                 double weight = Double.parseDouble(scanner.nextLine());
                 groceryItem.setWeight(weight);
             }
-        }
 
+            while (!"end".equalsIgnoreCase(itemCode)) {
+                String code = scanner.nextLine();
+                if (groceryItem != null) {
+                    basket.add(groceryItem);
+                }
+                System.out.println("Description : " + groceryItem.getItemName());
+                System.out.println("Price : \u00a3" + decimalFormatter.format(groceryItem.getPricePerMeasurementUnit()));
+
+                System.out.println("please enter next Item code; ");
+                groceryItem = groceryItemsMap.get(itemCode);
+                if (MeasurementMethod.WEIGHT.equals(groceryItem.getMeasurementMethod())) {
+                    System.out.println("please enter weight; ");
+                    double weight = Double.parseDouble(scanner.nextLine());
+                    groceryItem.setWeight(weight);
+                }
+            }
+
+        }
         calculatePayment(basket);
     }
 
@@ -55,31 +59,31 @@ public class PriceCalculator  implements IPriceCalculator{
 
     public String calculatePayment(List<GroceryItem> basket) {
         double subTotal = 0;
-        Scanner scanner = new Scanner(System.in);
+        //Scanner scanner = new Scanner(System.in);
 
         for(GroceryItem groceryItem :basket){
             if(groceryItem != null) {
-                if (groceryItem.getMeasurementUnit().equals(MeasurementMethod.WEIGHT)) {
+                if (groceryItem.getMeasurementMethod().equals(MeasurementMethod.WEIGHT)) {
                     System.out.println("Please Enter Weight in kg: ");
                     boolean waightIsValid = false;
                     while (!waightIsValid) {
                         try {
                             double weight = groceryItem.getWeight();
-                            subTotal += groceryItem.getPrice() * weight;
+                            subTotal += groceryItem.getPricePerMeasurementUnit() * weight;
                             waightIsValid = true;
                         } catch (Exception ex) {
                             System.out.println("Please Enter Weight in kg: ");
                         }
                     }
                 } else {
-                    subTotal += groceryItem.getPrice();
+                    subTotal += groceryItem.getPricePerMeasurementUnit();
                 }
             }
         }
         subTotal = Double.valueOf(decimalFormatter.format(subTotal));
 
         System.out.println("Sub-total is: \u00a3" + subTotal);
-        double discount = this.getPromotionalDiscount(basket);
+        double discount = this.getTotalDiscount(basket);
         if (discount == 0) {
             System.out.println("(No offers available)");
         } else {
@@ -109,45 +113,93 @@ public class PriceCalculator  implements IPriceCalculator{
     }
 
     /**
-     * This unction calculates the combined
+     * This function calculates the combined
      * discount for promoted goods
      * @param shoppingBasket
      * @return promotionalDiscount
      */
-    public double getPromotionalDiscount(List<GroceryItem> shoppingBasket){
-        double promotionalDiscount = 0;
-        List<PromotionalOffer> promotionalOfferList = inventory.getPromotionalOffersList();
+    public double getTotalDiscount(List<GroceryItem> shoppingBasket){
 
-        for( PromotionalOffer promotionalOffer :promotionalOfferList) {
-            int discountedGoodPurchasedCount = 0;
-            double itemPrice =0;
+        double totalalDiscount = 0;
 
-            for (GroceryItem groceryItem : shoppingBasket ) {
-                String itemCode = groceryItem.getItemCode();
+        double totalIndividualDiscount = getTotalIndividualDiscount(shoppingBasket);
+        double totalCombinedDistotnt = getTotalCombinationDiscount(shoppingBasket);
+        totalalDiscount = totalIndividualDiscount + totalCombinedDistotnt;
+        return totalalDiscount;
+    }
 
+    /**
+     * This function in only to calculate
+     * the discount of the goods which are
+     * only eligible for discount when purchased
+     * along with
+     * other pubstituted ones
+     * @param shoppingBasket
+     * @return
+     */
 
-                if (itemCode.equalsIgnoreCase(promotionalOffer.getPromotedItemBarcode())){
-                    discountedGoodPurchasedCount ++;
-                    itemPrice = groceryItem.getPrice();
+    public double getTotalCombinationDiscount(List<GroceryItem> shoppingBasket){
+        double discount = 0;
+        double basketPromotedItemCount = 0 ;
+        double basketSubstitutedIteCount = 0;
+        List<PromotionalOffer> combinationOfferList = inventory.getPromotionalOffersList();
+        for( PromotionalOffer promotionalOffer :combinationOfferList) {
+                GroceryItem promotedItem = null;
+                for (GroceryItem groceryItem : shoppingBasket) {
+                    String itemCode = groceryItem.getItemCode();
+
+                    if (itemCode.equalsIgnoreCase(promotionalOffer.getPromotedItemBarcode())) {
+                        promotedItem = groceryItem;
+                        basketPromotedItemCount++;
+                    } else if (itemCode.equalsIgnoreCase(promotionalOffer.getSubstitutedItemBarcode())) {
+                        basketSubstitutedIteCount++;
+                    }
+
                 }
-            }
-            if(discountedGoodPurchasedCount !=0) {
-                if (promotionalOffer.getDiscountType() == DeductionType.NUMBER) {
-                    promotionalDiscount = +promotionalOffer.getPromotedItemCount() / discountedGoodPurchasedCount * itemPrice;
-                } else {
-
-                    double discountedQuantity = +(discountedGoodPurchasedCount / promotionalOffer.getPromotedItemCount());
-                    double originalPrice = promotionalOffer.getPromotedItemCount() * discountedQuantity * itemPrice;
-                    double discountedPrice = discountedQuantity * promotionalOffer.getDiscountedPrice();
-                    promotionalDiscount = (double)(originalPrice *100 - discountedPrice * 100)/100;
+                if (promotedItem != null) {
+                   needs rethink int discountEligibleCount = new Double(basketPromotedItemCount * promotedItem.getPricePerMeasurementUnit()).intValue();
+                    discount = discountEligibleCount * promotionalOffer.getDiscountRate() / 100;
                 }
-            }
+                for (GroceryItem groceryItem : shoppingBasket) {
+                    String itemCode = groceryItem.getItemCode();
+                    if (itemCode.equalsIgnoreCase(promotionalOffer.getPromotedItemBarcode()))
+                        shoppingBasket.remove(groceryItem);
+                }
 
         }
 
-
-        return promotionalDiscount;
+        return discount;
     }
+
+    /**
+     *
+     * @param shoppingBasket
+     * @return
+     */
+
+    public double getTotalIndividualDiscount(List<GroceryItem> shoppingBasket){
+        double discount = 0;
+        List<PromotionalOffer> individualOfferList = inventory.getIndividualPromotionalOffersList());
+        for( PromotionalOffer promotionalOffer :individualOfferList) {
+                for (GroceryItem groceryItem : shoppingBasket) {
+                    String itemCode = groceryItem.getItemCode();
+
+                    if (itemCode.equalsIgnoreCase(promotionalOffer.getPromotedItemBarcode())) {
+
+                        double itemPrice = groceryItem.getPricePerMeasurementUnit();
+                        if (groceryItem.getMeasurementMethod() == MeasurementMethod.COUNT) {
+                            discount = + itemPrice * promotionalOffer.getDiscountRate() / 100;
+
+                        } else {
+                            discount = + itemPrice* groceryItem.getWeight() * promotionalOffer.getDiscountRate() / 100;
+
+                        }
+                    }
+                }
+        }
+        return discount;
+    }
+
 
 
     public Map<String, GroceryItem> getGroceryItemsMap() {
@@ -158,7 +210,7 @@ public class PriceCalculator  implements IPriceCalculator{
         this.groceryItemsMap = groceryItemsMap;
     }
 
-    public Inventory getInventory() {
+    public IInventory getInventory() {
         return inventory;
     }
 

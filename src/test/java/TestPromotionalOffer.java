@@ -6,18 +6,18 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by Behrooz on 31/10/2017.
+ * Created by Behrooz on 10/06/2018..
  */
 public class TestPromotionalOffer {
 
     @Test
     public void testParametrazedConstructor() {
-        PromotionalOffer promotionalOffer = new PromotionalOffer("COK", 2, DeductionType.PRICE, 0,1);
+        PromotionalOffer promotionalOffer = new PromotionalOffer("COK", 2, DeductionType.PRICE, 0,1, null,0);
 
         assert(2 == promotionalOffer.getPromotedItemCount());
         assertEquals("COK",promotionalOffer.getPromotedItemBarcode());
         assert(2 == promotionalOffer.getPromotedItemCount());
-        assert(1 == promotionalOffer.getDiscountedPrice());
+        assert(1 == promotionalOffer.getDiscountRate());
     }
 
     @Test

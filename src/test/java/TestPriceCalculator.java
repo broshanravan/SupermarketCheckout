@@ -1,5 +1,5 @@
 /**
- * Created by Behrooz on 31/10/2017.
+ * Created by Behrooz on 10/06/2018.
  */
 import org.junit.Before;
 import org.junit.Test;
@@ -89,7 +89,7 @@ public class TestPriceCalculator {
         groceryItemList.add(coke);
         groceryItemList.add(coke);
 
-        double discount = priceCalculator.getPromotionalDiscount(groceryItemList);
+        double discount = priceCalculator.getTotalDiscount(groceryItemList);
         assertEquals(0.4, discount );
 
     }
@@ -105,7 +105,7 @@ public class TestPriceCalculator {
         PriceCalculator priceCalculator = new PriceCalculator();
         List<GroceryItem> groceryItemList = new ArrayList<GroceryItem>();
         List<PromotionalOffer> promotionalOfferList = new LinkedList<PromotionalOffer>();
-        PromotionalOffer promotionalOffer = new PromotionalOffer("BNS", 3, DeductionType.NUMBER, 2,0);
+        PromotionalOffer promotionalOffer = new PromotionalOffer("BNS", 3, DeductionType.NUMBER, 2,0, null,0);
 
         promotionalOfferList.add(promotionalOffer);
 
@@ -122,7 +122,7 @@ public class TestPriceCalculator {
         groceryItemList.add(bean);
         groceryItemList.add(soup);
 
-        double discount = priceCalculator.getPromotionalDiscount(groceryItemList);
+        double discount = priceCalculator.getTotalDiscount(groceryItemList);
         assertEquals(0.5, discount );
 
     }
@@ -138,7 +138,7 @@ public class TestPriceCalculator {
         List<GroceryItem> groceryItemList = new ArrayList<GroceryItem>();
 
         List<PromotionalOffer> promotionalOfferList = new LinkedList<PromotionalOffer>();
-        PromotionalOffer promotionalOffer = new PromotionalOffer("BNS", 3, DeductionType.NUMBER, 2,0);
+        PromotionalOffer promotionalOffer = new PromotionalOffer("BNS", 3, DeductionType.NUMBER, 2,0,null,0);
 
         promotionalOfferList.add(promotionalOffer);
 
@@ -151,7 +151,7 @@ public class TestPriceCalculator {
         groceryItemList.add(bread);
         groceryItemList.add(bread);
 
-        double discount = priceCalculator.getPromotionalDiscount(groceryItemList);
+        double discount = priceCalculator.getTotalDiscount(groceryItemList);
         assertEquals(0.0, discount );
 
 
@@ -177,7 +177,7 @@ public class TestPriceCalculator {
     public void testCombinationOfCountWeightOffer() {
         PriceCalculator priceCalculator = new PriceCalculator();
         List<GroceryItem> basket = new ArrayList<GroceryItem>();
-        PromotionalOffer promotionalOffer = new PromotionalOffer("BNS", 3, DeductionType.NUMBER, 2,0);
+        PromotionalOffer promotionalOffer = new PromotionalOffer("BNS", 3, DeductionType.NUMBER, 2,0, null, 0);
          basket.add(bean);
         basket.add(bean);
         basket.add(bean);
@@ -191,8 +191,8 @@ public class TestPriceCalculator {
         PriceCalculator priceCalculator = new PriceCalculator();
         List<GroceryItem> basket = new ArrayList<GroceryItem>();
         List<PromotionalOffer> promotionalOfferList = new LinkedList<PromotionalOffer>();
-        PromotionalOffer promotionalOfferBannanas = new PromotionalOffer("BNN", 3, DeductionType.NUMBER, 2,2);
-        PromotionalOffer promotionalOfferOrange = new PromotionalOffer("ORG", 3, DeductionType.NUMBER, 3,3);
+        PromotionalOffer promotionalOfferBannanas = new PromotionalOffer("BNN", 3, DeductionType.NUMBER, 2,2, null, 0);
+        PromotionalOffer promotionalOfferOrange = new PromotionalOffer("ORG", 3, DeductionType.NUMBER, 3,3,null,0);
         promotionalOfferList.add(promotionalOfferBannanas);
         promotionalOfferList.add(promotionalOfferOrange);
         basket.add(bannanas);

@@ -1,23 +1,23 @@
 
 /**
- * Created by Behrooz on 31/10/2017.
+ * Created by Behrooz on 10/06/2018.
  */
 public class GroceryItem {
     private String itemName;
-    private double price;
+    private double pricePerMeasurementUnit;
     private String itemCode;
-    private MeasurementMethod measurementUnit;
+    private MeasurementMethod measurementMethod;
     private double weight;
 
     public GroceryItem(String itemNameIn,
-                 double priceIn,
+                 double pricePerMesurmentUnitIn,
                  String itemCodeIn,
                  MeasurementMethod measurementUnitIn,
                  double weightIn) {
          itemName = itemNameIn;
-         price = priceIn;
+        pricePerMeasurementUnit = pricePerMesurmentUnitIn;
          itemCode = itemCodeIn;
-        measurementUnit = measurementUnitIn;
+        measurementMethod = measurementUnitIn;
         weight= weightIn;
 
     }
@@ -34,12 +34,12 @@ public class GroceryItem {
         this.itemName = itemName;
     }
 
-    public double getPrice() {
-        return price;
+    public double getPricePerMeasurementUnit() {
+        return pricePerMeasurementUnit;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPricePerMeasurementUnit(double pricePerMeasurementUnit) {
+        this.pricePerMeasurementUnit = pricePerMeasurementUnit;
     }
 
     public String getItemCode() {
@@ -50,12 +50,12 @@ public class GroceryItem {
         this.itemCode = itemCode;
     }
 
-    public MeasurementMethod getMeasurementUnit() {
-        return measurementUnit;
+    public MeasurementMethod getMeasurementMethod() {
+        return measurementMethod;
     }
 
-    public void setMeasurementUnit(MeasurementMethod measurementUnit) {
-        this.measurementUnit = measurementUnit;
+    public void setMeasurementMethod(MeasurementMethod measurementMethod) {
+        this.measurementMethod = measurementMethod;
     }
 
     public double getWeight() {
