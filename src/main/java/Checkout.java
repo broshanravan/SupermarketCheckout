@@ -12,12 +12,8 @@ public class Checkout {
         System.out.println("Start Shopping");
         System.out.println("Please enter the barcode");
         System.out.println("Enter 'end' to complete the shopping");
+        priceCalculatur.addItemsToBasket();
 
-        Scanner scanner = new Scanner(System.in);
-        String code = scanner.nextLine();
-        priceCalculatur.addItemsToBasket(code);
-
-        //System.out.println("totalPrice is: \u00a3"  + totalPrice);
 
     }
 }

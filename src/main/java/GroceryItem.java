@@ -12,12 +12,12 @@ public class GroceryItem {
     public GroceryItem(String itemNameIn,
                  double pricePerMesurmentUnitIn,
                  String itemCodeIn,
-                 MeasurementMethod measurementUnitIn,
+                 MeasurementMethod measurementMethodIn,
                  double weightIn) {
          itemName = itemNameIn;
         pricePerMeasurementUnit = pricePerMesurmentUnitIn;
          itemCode = itemCodeIn;
-        measurementMethod = measurementUnitIn;
+        measurementMethod = measurementMethodIn;
         weight= weightIn;
 
     }

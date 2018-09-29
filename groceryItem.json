@@ -1,8 +1,9 @@
 [
-  {"itemCode":"BNS", "itemName":"Beans","measurementMethod":"COUNT", "price":0.50},
-  {"itemCode":"BRD", "itemName":"Bread", "measurementMethod":"COUNT", "price":0.8},
-  {"itemCode":"SUP", "itemName":"Soup", "measurementMethod":"COUNT", "price":0.65},
-  {"itemCode":"APL", "itemName":"Apple","measurementMethod":"COUNT","price":1.00},
-  {"itemCode":"COK", "itemName":"Coke", "measurementMethod":"COUNT","price":0.7},
-  {"itemCode":"BNN", "itemName":"Banana","measurementMethod":"WEIGHT","price":1.00}
+  {"itemCode":"BNS", "itemName":"Beans","measurementMethod":"COUNT", "pricePerMeasurementUnit":0.50},
+  {"itemCode":"BRD", "itemName":"Bread", "measurementMethod":"COUNT", "pricePerMeasurementUnit":0.80},
+  {"itemCode":"SUP", "itemName":"Soup", "measurementMethod":"COUNT", "pricePerMeasurementUnit":0.65},
+  {"itemCode":"APL", "itemName":"Apple","measurementMethod":"COUNT","pricePerMeasurementUnit":1.00},
+  {"itemCode":"COK", "itemName":"Coke", "measurementMethod":"COUNT","pricePerMeasurementUnit":0.7},
+  {"itemCode":"BNN", "itemName":"Banana","measurementMethod":"WEIGHT","pricePerMeasurementUnit":1.60},
+  {"itemCode":"MLK", "itemName":"Milk","measurementMethod":"COUNT","pricePerMeasurementUnit":1.30}
 ]

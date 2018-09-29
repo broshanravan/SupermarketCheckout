@@ -12,7 +12,7 @@ public class TestGroceryItem {
         GroceryItem groceryItem = new GroceryItem("apple", 1, "APL",  MeasurementMethod.WEIGHT,10);
 
         assertEquals("apple",groceryItem.getItemName());
-        assert(1 == groceryItem.getPrice());
+        assert(1 == groceryItem.getPricePerMeasurementUnit());
         assertEquals("APL",groceryItem.getItemCode());
         assertEquals(MeasurementMethod.WEIGHT,groceryItem.getMeasurementMethod());
         assert(10 == groceryItem.getWeight());
@@ -28,8 +28,8 @@ public class TestGroceryItem {
     @Test
     public void testSetPrice(){
         GroceryItem groceryItem = new GroceryItem();
-        groceryItem.setPrice(1);
-        assert(1 == groceryItem.getPrice());
+        groceryItem.setPricePerMeasurementUnit(1);
+        assert(1 == groceryItem.getPricePerMeasurementUnit());
     }
 
     @Test

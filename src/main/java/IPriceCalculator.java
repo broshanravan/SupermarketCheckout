@@ -9,7 +9,7 @@ public interface IPriceCalculator {
 
     public String calculatePayment(List<GroceryItem> basket) ;
 
-    public void  addItemsToBasket(String itemCode);
+    public void  addItemsToBasket();
 
     public boolean isBarCodeValid(String barCodeIn);
 }

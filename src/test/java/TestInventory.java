@@ -14,7 +14,7 @@ public class TestInventory {
         inventory.setInventoryFileName("testInventories/testGroceryItems.json");
         inventory.setPrpmotionalFileName("testInventories/testPromotionalOffers.json");
         Map<String, GroceryItem> itemsMap = inventory.readItemsFromFile();
-        assert (6 == itemsMap.size());
+        assert (7 == itemsMap.size());
 
     }
 
@@ -27,7 +27,59 @@ public class TestInventory {
         inventory.setPrpmotionalFileName("testInventories/testPromotionalOffers.json");
 
         List<PromotionalOffer> promotionalOfferList = inventory.getPromotionalOffersList();
-        assert 2 == promotionalOfferList.size();
+        assert 4 == promotionalOfferList.size();
+    }
+
+    @Test
+    public void testPromotionalOffersListContents() {
+        Inventory inventory = new Inventory();
+
+        inventory.setInventoryFileName("testInventories/testGroceryItems.json");
+        inventory.setPrpmotionalFileName("testInventories/testPromotionalOffers.json");
+
+        List<PromotionalOffer> promotionalOfferList = inventory.getPromotionalOffersList();
+
+        PromotionalOffer promotionalOffer = promotionalOfferList.get(0);
+
+        assert("SUP".equalsIgnoreCase(promotionalOffer.getPromotedItemBarcode()));
+        assert(DeductionType.INDIVIDUAL == promotionalOffer.getDeductionType());
+        assert(10 == promotionalOffer.getDiscountRate());
+        assert(promotionalOffer.getSubstitutedItemBarcode() == null);
+    }
+
+    @Test
+    public void testIndividualOffersListContents() {
+        Inventory inventory = new Inventory();
+
+        inventory.setInventoryFileName("testInventories/testGroceryItems.json");
+        inventory.setPrpmotionalFileName("testInventories/testPromotionalOffers.json");
+
+        List<PromotionalOffer> promotionalOfferList = inventory.getIndividualPromotionalOffersList();
+
+        PromotionalOffer promotionalOffer = promotionalOfferList.get(0);
+
+        assert("SUP".equalsIgnoreCase(promotionalOffer.getPromotedItemBarcode()));
+        assert(DeductionType.INDIVIDUAL == promotionalOffer.getDeductionType());
+        assert(10 == promotionalOffer.getDiscountRate());
+        assert(promotionalOffer.getSubstitutedItemBarcode() == null);
+    }
+    @Test
+    public void testCombinedOffersListContents() {
+        Inventory inventory = new Inventory();
+
+        inventory.setInventoryFileName("testInventories/testGroceryItems.json");
+        inventory.setPrpmotionalFileName("testInventories/testPromotionalOffers.json");
+
+        List<PromotionalOffer> promotionalOfferList = inventory.getCombinedPromotionalOffersList();
+
+        PromotionalOffer promotionalOffer = promotionalOfferList.get(0);
+
+        assert("BRD".equalsIgnoreCase(promotionalOffer.getPromotedItemBarcode()));
+        assert(DeductionType.COMBINATION == promotionalOffer.getDeductionType());
+        assert(50 == promotionalOffer.getDiscountRate());
+        assert("BNS".equalsIgnoreCase(promotionalOffer.getSubstitutedItemBarcode()));
+        assert(promotionalOffer.getSubstitutedItemCount() == 2);
+
     }
 
     @Test
@@ -36,7 +88,7 @@ public class TestInventory {
         inventory.setInventoryFileName("testInventories/testGroceryItems.json");
         inventory.setPrpmotionalFileName("testInventories/testPromotionalOffers.json");
         List<String> barCodesList = inventory.getAllBarCodes();
-        assert(barCodesList.size() == 6);
+        assert(barCodesList.size() == 7);
         assert(barCodesList.contains("BRD"));
         assert(barCodesList.contains("APL"));
         assert(barCodesList.contains("COK"));

@@ -12,12 +12,13 @@ public class TestPromotionalOffer {
 
     @Test
     public void testParametrazedConstructor() {
-        PromotionalOffer promotionalOffer = new PromotionalOffer("COK", 2, DeductionType.PRICE, 0,1, null,0);
 
-        assert(2 == promotionalOffer.getPromotedItemCount());
+        PromotionalOffer promotionalOffer = new PromotionalOffer("COK",  DeductionType.INDIVIDUAL, 20, null,0);
+
+
         assertEquals("COK",promotionalOffer.getPromotedItemBarcode());
-        assert(2 == promotionalOffer.getPromotedItemCount());
-        assert(1 == promotionalOffer.getDiscountRate());
+
+        assert(20 == promotionalOffer.getDiscountRate());
     }
 
     @Test
@@ -38,15 +39,15 @@ public class TestPromotionalOffer {
     @Test
     public void testSetDiscountPercentRate(){
         PromotionalOffer promotionalOffer = new PromotionalOffer();
-        promotionalOffer.setPromotedItemCount(5);
-        assert(5 == promotionalOffer.getPromotedItemCount());
+        promotionalOffer.setDiscountRate(5);
+        assert(5 == promotionalOffer.getDiscountRate());
     }
 
     @Test
     public void testSetPromotedItemCount() {
         PromotionalOffer promotionalOffer = new PromotionalOffer();
-        promotionalOffer.setPromotedItemCount(2);
-        assert(2 == promotionalOffer.getPromotedItemCount());
+        promotionalOffer.setSubstitutedItemCount(2);
+        assert(2 == promotionalOffer.getSubstitutedItemCount());
     }
 
 }

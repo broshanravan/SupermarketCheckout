@@ -2,8 +2,8 @@
   {
     "promotedItemBarcode": "sup",
     "promotedItemCount": 3,
-    "deductionType":"INDIVIDUAL"
-    "discountRate":0,
+    "deductionType":"INDIVIDUAL",
+    "discountRate":10,
     "substitutedItemBarcode":null,
     "substitutedItemCount":0
   },
@@ -15,7 +15,7 @@
     "discountRate":50,
     "substitutedItemBarcode":"BNS",
     "substitutedItemCount":2
-  }
+  },
 
   {
     "promotedItemBarcode": "MLK",

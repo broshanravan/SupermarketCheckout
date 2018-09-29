@@ -4,4 +4,5 @@
 public enum DeductionType {
     INDIVIDUAL,
     COMBINATION
+
 }

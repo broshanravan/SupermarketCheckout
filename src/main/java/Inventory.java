@@ -26,12 +26,13 @@ public class Inventory implements IInventory{
     public  Map<String,GroceryItem> readItemsFromFile() {
         Map<String,GroceryItem> groceryItemsMap = new HashMap<String,GroceryItem>();
         File jsonFile = new File(inventoryFileName);
+        BufferedReader bufferReader = null;
+
         try {
-            BufferedReader bufferReader = new BufferedReader(new FileReader(jsonFile));
+             bufferReader = new BufferedReader(new FileReader(jsonFile));
             Gson gson = new Gson();
 
             List<GroceryItem> groceryItemList = gson.fromJson(bufferReader,new TypeToken<List<GroceryItem>>(){}.getType());
-            System.out.println("The length of Items list Is: " + groceryItemList.size());
              barcodeList = new ArrayList<String>();
 
             for (GroceryItem  groceryItem : groceryItemList) {
@@ -40,13 +41,22 @@ public class Inventory implements IInventory{
             }
 
 
-        } catch(FileNotFoundException nfe) {
-            logger.error("The Inventory file is missing");
-
         } catch (IOException ioe){
             logger.error("The Inventory file is corrupted or not present");
+        }finally{
+            try {
+                bufferReader.close();
+            } catch(NullPointerException npe){
+                logger.error("error  bufferReader not initialize");
+
+            } catch (IOException ioe){
+                logger.error("error  closing bufferReader e");
+            }
+
         }
-        return groceryItemsMap;
+
+
+            return groceryItemsMap;
     }
 
     /**
@@ -74,18 +84,26 @@ public class Inventory implements IInventory{
         //String promotionFileName = getFileName("promotionalOffer.json");
 
         File file = new File(prpmotionalFileName);
+        BufferedReader bufferReader = null;
         try {
-            BufferedReader bufferReader = new BufferedReader(new FileReader(file));
+            bufferReader = new BufferedReader(new FileReader(file));
             Gson gson = new Gson();
-             promotionalOfferList = gson.fromJson(bufferReader,new TypeToken<List<PromotionalOffer>>(){}.getType());
+            promotionalOfferList = gson.fromJson(bufferReader, new TypeToken<List<PromotionalOffer>>() {
+            }.getType());
 
-             System.out.println(promotionalOfferList);
-
-        } catch(FileNotFoundException nfe) {
-            logger.error("error, promotional offers file does not exist");
 
         } catch (IOException ioe){
             logger.error("error while reading the promotional offers from the file");
+        } finally{
+            try {
+                bufferReader.close();
+            } catch(NullPointerException npe){
+                logger.error("error  bufferReader not initialize");
+
+            } catch (IOException ioe){
+                logger.error("error  closing bufferReader e");
+            }
+
         }
         return promotionalOfferList;
 
@@ -93,7 +111,7 @@ public class Inventory implements IInventory{
 
 
     public List<PromotionalOffer> getIndividualPromotionalOffersList(){
-        List<PromotionalOffer> individualOfferList = new ArrayList<PromotionalOffer>()
+        List<PromotionalOffer> individualOfferList = new ArrayList<PromotionalOffer>();
         List<PromotionalOffer> promotionalOfferList = getPromotionalOffersList();
 
         for (PromotionalOffer promotionalOffer: promotionalOfferList) {
